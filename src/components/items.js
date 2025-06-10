@@ -1,4 +1,4 @@
-import Component from "../core/component";
+import Component from "../core/component.js";
 
 export default class Items extends Component {
   setup() {
