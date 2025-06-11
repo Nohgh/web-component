@@ -1,23 +1,37 @@
-import Component from "../core/component.js";
+import Component from "../core/component";
 
 export default class Items extends Component {
-  setup() {
-    this.state = { items: ["item1", "item2"] };
-  }
-
   template() {
-    const { items } = this.state;
+    const { filteredItems } = this.props;
     return `
-    <ul>
-    ${items.map((item) => `<li>${item}</li>`).join("")}</ui>
-    <button>추가</button>
+      <ul>
+        ${filteredItems
+          .map(
+            ({ contents, active, seq }) => `
+          <li data-seq="${seq}">
+            ${contents}
+            <button class="toggleBtn" style="color: ${
+              active ? "#09F" : "#F09"
+            }">
+              ${active ? "활성" : "비활성"}
+            </button>
+            <button class="deleteBtn">삭제</button>
+          </li>
+        `
+          )
+          .join("")}
+      </ul>
     `;
   }
-
   setEvent() {
-    this.$target.querySelctor("button").addEventListner("click", () => {
-      const { items } = this.state;
-      this.setState({ items: [...items, `item${items.length + 1}`] });
+    const { deleteItem, toggleItem } = this.props;
+
+    this.addEvent("click", ".deleteBtn", ({ target }) => {
+      deleteItem(Number(target.closest("[data-seq]").dataset.seq));
+    });
+
+    this.addEvent("click", ".toggleBtn", ({ target }) => {
+      toggleItem(Number(target.closest("[data-seq]").dataset.seq));
     });
   }
 }

@@ -12,20 +12,29 @@ export default class Component {
   }
 
   setup() {}
+
   mounted() {}
+
   template() {
     return "";
   }
+  setEvent() {}
+
   render() {
     this.$target.innerHTML = this.template();
     this.mounted(); //render이후 mounted 실행
   }
-  setEvent() {}
+
   setState(newState) {
     this.state = { ...this.state, ...newState };
     this.render();
   }
+
   addEvent(eventType, selector, callback) {
-    //생략
+    const children = [...this.$target.querySelectorAll(selector)];
+    this.$target.addEventListener(eventType, (event) => {
+      if (!event.target.closest(selector)) return false;
+      callback(event);
+    });
   }
 }
