@@ -7,7 +7,7 @@ export default class App extends Component {
   setup() {
     this.state = {
       isFilter: 0,
-      item: [
+      items: [
         {
           seq: 1,
           contents: "item1",
@@ -85,8 +85,8 @@ export default class App extends Component {
   }
 
   toggleItem(seq) {
-    const itmes = [...this.state.items];
-    const index = itmes.findIndex((v) => v.seq === seq);
+    const items = [...this.state.items];
+    const index = items.findIndex((v) => v.seq === seq);
     items[index].active = !items[index].active;
     this.setState({ items });
   }
@@ -96,4 +96,4 @@ export default class App extends Component {
   }
 }
 
-new App();
+new App(document.querySelector("#app"));

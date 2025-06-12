@@ -3,7 +3,7 @@ export default class Component {
   props;
   state;
 
-  constructor($target) {
+  constructor($target, props) {
     this.$target = $target;
     this.props = props;
     this.setup();
